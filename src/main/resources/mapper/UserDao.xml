@@ -9,7 +9,7 @@
         id, name
     </sql>
     <sql id="tableName">
-        user
+        ${@com.kunkun.sharding.shard.DatabaseContextHolder@getTableName()}
     </sql>
 
     <insert id="insertUser">

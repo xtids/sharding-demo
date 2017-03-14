@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="shardStrategy" class="com.kunkun.sharding.shard.strategy.ModShardStrategy">
+        <property name="shardKey2TableName">
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry key="user_id" value="user_"/>
+                <entry key="poi_id" value="poi_"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--aop 确定数据源路由信息-->
+    <bean id="multiDataSourceSupport" class="com.kunkun.sharding.shard.aop.MultiDataSourceSupport" />
+
+    <aop:config>
+        <aop:aspect ref="multiDataSourceSupport">
+            <aop:around method="around" pointcut="execution(public * com.kunkun.sharding.dao.*.*(..))"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

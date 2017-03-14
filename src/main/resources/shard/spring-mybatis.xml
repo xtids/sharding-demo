@@ -69,12 +69,4 @@
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="multiDatasource" />
     </bean>
-
-    <!--aop 确定数据源路由信息-->
-    <bean id="multiDataSourceSupport" class="com.kunkun.sharding.shard.aop.MultiDataSourceSupport" />
-    <aop:config>
-        <aop:aspect ref="multiDataSourceSupport">
-            <aop:around method="around" pointcut="execution(public * com.kunkun.sharding.dao.*.*(..))"/>
-        </aop:aspect>
-    </aop:config>
 </beans>
